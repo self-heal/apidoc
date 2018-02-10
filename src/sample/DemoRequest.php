@@ -1,24 +1,21 @@
 <?php
 namespace app\structs;
 
-use yangsl\test\apidoc\ApidocInterface;
-use yii\base\Component;
-
 /**
  * @property integer $id
- * @property integer $customer_id
- * @property integer $created_at
- * @property string $total
+ * @property integer $title
+ * @property integer $content
+ * @property integer $state
  */
-class DemoRequest extends Component implements ApidocInterface {
+class DemoRequest extends BaseRequest {
 
-    private $params = [
+    /*private $rules = [
         'default' => array(
             'title' => array('name' => 'title', 'require' => true, 'min' => 1, 'max' => '20', 'desc' => '标题'),
             'content' => array('name' => 'content', 'require' => true, 'min' => 1, 'desc' => '内容'),
             'state' => array('name' => 'state', 'type' => 'int', 'default' => 0, 'desc' => '状态'),
         ),
-        /*'update' => array(
+        'update' => array(
             'id' => array('name' => 'id', 'require' => true, 'min' => 1, 'desc' => 'ID'),
             'title' => array('name' => 'title', 'require' => true, 'min' => 1, 'max' => '20', 'desc' => '标题'),
             'content' => array('name' => 'content', 'require' => true, 'min' => 1, 'desc' => '内容'),
@@ -49,12 +46,13 @@ class DemoRequest extends Component implements ApidocInterface {
             'range' => array('image/jpeg', 'image/png'),  // 允许的文件格式
             'ext' => 'jpeg,jpg,png', // 允许的文件扩展名
             'desc' => '待上传的图片文件',
-        ),*/
-    ];
+        ),
+    ];*/
 
-    public function getParams()
+    public function getRules()
     {
         return [
+            'id' => ['type' => 'int', 'desc' => 'ID'],
             'title' => array('name' => 'title', 'require' => true, 'min' => 1, 'max' => '20', 'desc' => '标题'),
             'content' => array('name' => 'content', 'require' => true, 'min' => 1, 'desc' => '内容'),
             'state' => array('name' => 'state', 'type' => 'int', 'default' => 0, 'desc' => '状态'),
