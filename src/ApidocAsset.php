@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yangsl\test;
+namespace yangsl\apidoc;
 
 use yii\web\AssetBundle;
 

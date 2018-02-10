@@ -5,15 +5,12 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yangsl\test\controllers;
+namespace yangsl\apidoc\controllers;
 
-use app\components\Helper;
 use yangsl\test\apidoc\ApiDesc;
 use yangsl\test\apidoc\ApiList;
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -26,10 +23,6 @@ class DefaultController extends Controller
      * @var \yii\gii\Module
      */
     public $module;
-    /**
-     * @var \yii\gii\Generator
-     */
-    public $generator;
 
 
     public function actionIndex()

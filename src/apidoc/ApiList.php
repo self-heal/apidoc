@@ -1,5 +1,5 @@
 <?php
-namespace yangsl\test\apidoc;
+namespace yangsl\apidoc\apidoc;
 
 defined('D_S') || define('D_S', DIRECTORY_SEPARATOR);
 define('API_ROOT', '.');

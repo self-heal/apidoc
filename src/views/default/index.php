@@ -1,5 +1,5 @@
 <?php
-$asset = yangsl\test\ApidocAsset::register($this);
+$asset = yangsl\apidoc\ApidocAsset::register($this);
 $table_color_arr = explode(" ", "red orange yellow olive teal blue violet purple pink grey black");
 ?>
 <div class="ui text container" style="max-width: none !important; width: 1200px" id="menu_top">

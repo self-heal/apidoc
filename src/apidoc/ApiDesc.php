@@ -1,5 +1,5 @@
 <?php
-namespace yangsl\test\apidoc;
+namespace yangsl\apidoc\apidoc;
 
 
 

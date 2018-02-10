@@ -6,7 +6,7 @@
  * Time: 下午11:15
  */
 
-namespace yangsl\test\apidoc;
+namespace yangsl\apidoc\apidoc;
 
 Interface ApidocInterface
 {

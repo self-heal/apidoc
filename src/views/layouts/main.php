@@ -1,12 +1,7 @@
 <?php
-use yii\bootstrap\NavBar;
-use yii\bootstrap\Nav;
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-$asset = yangsl\test\ApidocAsset::register($this);
+$asset = yangsl\apidoc\ApidocAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

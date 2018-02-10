@@ -1,10 +1,10 @@
 <?php
 
-namespace yangsl\test;
+namespace yangsl\apidoc;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'yangsl\test\controllers';
+    public $controllerNamespace = 'yangsl\apidoc\controllers';
     public $appControllers = true;
     public $suffix = '';
     public $prefix = '';
