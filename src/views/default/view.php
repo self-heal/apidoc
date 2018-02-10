@@ -85,7 +85,7 @@ foreach ($rules as $key => $rule) {
     </thead>
     <tbody>
     <?php
-        function renderResponse($response, $child = false) {
+        function renderResponse($response, $typeMaps = [], $child = false) {
             foreach ($response as $k => $item) {
                 $type = isset($typeMaps[$item['type']]) ? $typeMaps[$item['type']] : $item['type'];
                 if($child) {
@@ -98,11 +98,11 @@ EOT;
 EOT;
                 }
                 if($item['type'] == 'array' && isset($item['items'])) {
-                    renderResponse($item['items'], true);
+                    renderResponse($item['items'], $typeMaps,true);
                 }
             }
         }
-        renderResponse($returns);
+        renderResponse($returns, $typeMaps);
     ?>
     </tbody>
 </table>
