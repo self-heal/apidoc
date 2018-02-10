@@ -100,9 +100,9 @@ $table_color_arr = explode(" ", "red orange yellow olive teal blue violet purple
                                 <!-- 主题切换，仅当在线时才支持 -->
                                 <?php
                                     if ($theme == 'fold') {
-                                        echo '<div style="float: right"><a href="' . \yii\helpers\Url::to(['/api-document', 'type' => 'expand']) . '">切换回展开版</a></div>';
+                                        echo '<div style="float: right"><a href="' . \yii\helpers\Url::to(['/api-document', 'theme' => 'expand']) . '">切换回展开版</a></div>';
                                     } else {
-                                        echo '<div style="float: right"><a href="' . \yii\helpers\Url::to(['/api-document', 'type' => 'fold']) . '">切换回折叠版</a></div>';
+                                        echo '<div style="float: right"><a href="' . \yii\helpers\Url::to(['/api-document', 'theme' => 'fold']) . '">切换回折叠版</a></div>';
                                     }
                                 ?>
 
