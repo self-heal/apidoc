@@ -108,9 +108,7 @@ class ApiList {
             if ($isClassIgnore) {
                 continue;
             }
-if($ctlClassName != 'app\modules\test\controllers\DefaultController') {
-    continue;
-}
+
             $allApiS[$nameSpace][$apiControllerClassName]['title'] = $title;
             $allApiS[$nameSpace][$apiControllerClassName]['desc']  = $desc;
             $allApiS[$nameSpace][$apiControllerClassName]['methods'] = [];
