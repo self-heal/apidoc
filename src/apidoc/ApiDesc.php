@@ -56,7 +56,7 @@ class ApiDesc {
                 $needClassDocComment .=  "\n" . $comment;
             }
         }
-
+        $methodName = $this->convertHyphens($methodName);
         // 方法注释
         $rMethod = new \ReflectionMethod($ctlClassName, $methodName);
         $docCommentArr = explode("\n", $needClassDocComment . "\n" . $rMethod->getDocComment());
@@ -146,4 +146,17 @@ class ApiDesc {
 
         return [$description, $descComment, $requestData, $responseData];
     }
+
+    /*
+     * - 转驼峰
+     */
+    private function convertHyphens($str)
+    {
+        $str = preg_replace_callback('/([-_]+([a-z]{1}))/i',function($matches){
+            return strtoupper($matches[2]);
+        },$str);
+        return $str;
+    }
+
 }
+

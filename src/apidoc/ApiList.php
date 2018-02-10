@@ -26,7 +26,7 @@ class ApiList {
         $apiDirName = $this->appControllers?'../controllers':'';
         // 处理最外层的控制器 \app\controllers
         if ($this->appControllers) {
-            $files = listDir(API_ROOT . D_S . $apiDirName);
+            $files = $this->listDir(API_ROOT . D_S . $apiDirName);
             $appControllers = array_map(function($file){
                 $classNameTemp = strstr($file, '/controllers');
                 $classNameTemp = rtrim(substr($classNameTemp, 13), '.php');
@@ -41,7 +41,7 @@ class ApiList {
             $moduleDirName = $t->getFileName();
             $moduleDir = rtrim($moduleDirName, 'Module.php');
             $moduleDir = $moduleDir. 'controllers';
-            $moduleFiles = listDir($moduleDir);
+            $moduleFiles = $this->listDir($moduleDir);
             return array_map(function($moduleFile) use ($moduleNamespace) {
                 $namespace = $moduleNamespace . '\\controllers\\%s';
                 $className = rtrim(substr($moduleFile, strrpos($moduleFile, D_S) + 1), '.php');
@@ -113,7 +113,7 @@ class ApiList {
                 if (!$rMethod->isPublic() || strpos($mValue, '__') === 0) {
                     continue;
                 }
-                $mValue = humpToLine($mValue);
+                $mValue = $this->humpToLine($mValue);
                 $mValue = str_replace('action-', '', $mValue);
 
 
@@ -162,38 +162,29 @@ class ApiList {
         }
         return $allApiS;
     }
-}
 
-function listDir($dir) {
-    $dir .= substr($dir, -1) == D_S ? '' : D_S;
-    $dirInfo = array();
-    foreach (glob($dir . '*') as $v) {
-        if (is_dir($v)) {
-            $dirInfo = array_merge($dirInfo, listDir($v));
-        } else {
-            $dirInfo[] = $v;
+    private function listDir($dir) {
+        $dir .= substr($dir, -1) == D_S ? '' : D_S;
+        $dirInfo = array();
+        foreach (glob($dir . '*') as $v) {
+            if (is_dir($v)) {
+                $dirInfo = array_merge($dirInfo, $this->listDir($v));
+            } else {
+                $dirInfo[] = $v;
+            }
         }
+        return $dirInfo;
     }
-    return $dirInfo;
+
+    /*
+     * 驼峰转-
+     */
+    private function humpToLine($str){
+        $str = preg_replace_callback('/([A-Z]{1})/',function($matches){
+            return '-'.strtolower($matches[0]);
+        },$str);
+        return $str;
+    }
+
 }
 
-/*
- * 下划线转驼峰
- */
-function convertUnderline($str)
-{
-    $str = preg_replace_callback('/([-_]+([a-z]{1}))/i',function($matches){
-        return strtoupper($matches[2]);
-    },$str);
-    return $str;
-}
-
-/*
- * 驼峰转下划线
- */
-function humpToLine($str){
-    $str = preg_replace_callback('/([A-Z]{1})/',function($matches){
-        return '-'.strtolower($matches[0]);
-    },$str);
-    return $str;
-}
