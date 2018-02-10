@@ -140,9 +140,9 @@ class ApiList {
                 if ($isMethodIgnore) {
                     continue;
                 }
-                $routeName .= '/'.$mValue;
-                $allApiS[$nameSpace][$apiControllerClassName]['methods'][$routeName] = array(
-                    'service' => $routeName,
+                $routeUrl = $routeName . '/'.$mValue;
+                $allApiS[$nameSpace][$apiControllerClassName]['methods'][$routeUrl] = array(
+                    'service' => $routeUrl,
                     'title'   => $title,
                     'desc'    => $desc,
                 );
