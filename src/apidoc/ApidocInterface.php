@@ -10,7 +10,7 @@ namespace yangsl\apidoc\apidoc;
 
 Interface ApidocInterface
 {
-    public function getParams();
+    public function getRules();
 
     public function getResponse();
 }

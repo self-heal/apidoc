@@ -99,7 +99,7 @@ class ApiDesc {
                  * @var $apidoc ApidocInterface
                  */
                 $apidoc = new $object();
-                $requestData = $apidoc->getParams();
+                $requestData = $apidoc->getRules();
                 $responseData = $apidoc->getResponse();
                 $setApidocObject = true;
                 continue;
