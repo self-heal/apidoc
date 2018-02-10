@@ -9,14 +9,6 @@ class ApiList {
      * @var bool 是否检测基础控制器
      */
     public $appControllers = true;
-    /**
-     * @var string 接口前缀
-     */
-    public $prefix = '';
-    /**
-     * @var string 接口后缀
-     */
-    public $suffix = '';
 
     /**
      * 需要生成文档的模块名
@@ -108,7 +100,6 @@ class ApiList {
             if ($isClassIgnore) {
                 continue;
             }
-
             $allApiS[$nameSpace][$apiControllerClassName]['title'] = $title;
             $allApiS[$nameSpace][$apiControllerClassName]['desc']  = $desc;
             $allApiS[$nameSpace][$apiControllerClassName]['methods'] = [];
@@ -121,16 +112,6 @@ class ApiList {
                 $rMethod = new \Reflectionmethod($ctlClassName, $mValue);
                 if (!$rMethod->isPublic() || strpos($mValue, '__') === 0) {
                     continue;
-                }
-                //筛选接口方法,1.以action开头 [2.以设置的接口前缀开头 3.以设置的接口后缀结尾]
-                $prefix = 'action' . ucfirst($this->prefix);
-                if (strpos($mValue, $prefix) !== 0) {
-                    continue;
-                }
-                if ($this->suffix !== '') {
-                    if (strrev(substr(strrev($mValue), 0, strlen($this->suffix))) != $this->suffix) {
-                        continue;
-                    }
                 }
                 $mValue = humpToLine($mValue);
                 $mValue = str_replace('action-', '', $mValue);

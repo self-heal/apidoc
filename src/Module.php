@@ -6,8 +6,6 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'yangsl\apidoc\controllers';
     public $appControllers = true;
-    public $suffix = '';
-    public $prefix = '';
     public $modules = [];
 
     public function init()

@@ -8,14 +8,6 @@ class ApiDesc {
      * @var bool 是否检测基础控制器
      */
     public $appControllers = true;
-    /**
-     * @var string 接口前缀
-     */
-    public $prefix = '';
-    /**
-     * @var string 接口后缀
-     */
-    public $suffix = '';
 
     public function getApiInfo($service) {
         $requestData = array();

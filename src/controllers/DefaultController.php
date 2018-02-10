@@ -31,8 +31,6 @@ class DefaultController extends Controller
         $this->layout = 'main';
         $api = new ApiList();
         $api->appControllers = $this->module->appControllers;
-        $api->suffix = $this->module->suffix;
-        $api->prefix = $this->module->prefix;
         $api->modules = $this->module->modules;
         $allApiS = $api->getApiList($api->modules);
         return $this->render('index',[
@@ -47,8 +45,6 @@ class DefaultController extends Controller
         $service = \Yii::$app->request->get('service');
         $api = new ApiDesc();
         $api->appControllers = $this->module->appControllers;
-        $api->suffix = $this->module->suffix;
-        $api->prefix = $this->module->prefix;
         $info = $api->getApiInfo($service);
         list($description, $descComment, $requestData, $responseData) = $info;
         return $this->render('view', [
