@@ -17,7 +17,7 @@ use yii\web\AssetBundle;
  */
 class ApidocAsset extends AssetBundle
 {
-    public $sourcePath = '@yangsl/test/assets';
+    public $sourcePath = '@yangsl/apidoc/assets';
     public $css = [
         'main.css',
         'https://cdn.bootcss.com/semantic-ui/2.2.2/semantic.min.css',
