@@ -1,0 +1,18 @@
+{
+    "name": "yangsl/apidoc",
+    "description": "yii2-apidoc",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yangsl",
+            "email": "393415864@qq.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "yangsl\\apidoc\\": "src"
+        }
+    }
+}
