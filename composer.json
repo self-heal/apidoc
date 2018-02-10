@@ -1,6 +1,7 @@
 {
     "name": "yangsl/apidoc",
     "description": "yii2-apidoc",
+    "type": "yii2-extension",
     "license": "MIT",
     "authors": [
         {
@@ -8,6 +9,7 @@
             "email": "393415864@qq.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
     },
     "autoload": {
