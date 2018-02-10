@@ -12,7 +12,7 @@ class ApiDesc {
     public function getApiInfo($service) {
         $requestData = array();
         $responseData = array();
-        $description = '';
+        $description = $descComment = '暂无说明';
         $exceptions = array();
         $service = trim($service, '/');
         $exploade_service = explode('/', $service);
