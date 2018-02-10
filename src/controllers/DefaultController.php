@@ -7,8 +7,8 @@
 
 namespace yangsl\apidoc\controllers;
 
-use yangsl\test\apidoc\ApiDesc;
-use yangsl\test\apidoc\ApiList;
+use yangsl\apidoc\apidoc\ApiDesc;
+use yangsl\apidoc\apidoc\ApiList;
 use Yii;
 use yii\web\Controller;
 

@@ -108,7 +108,9 @@ class ApiList {
             if ($isClassIgnore) {
                 continue;
             }
-
+if($ctlClassName != 'app\modules\test\controllers\DefaultController') {
+    continue;
+}
             $allApiS[$nameSpace][$apiControllerClassName]['title'] = $title;
             $allApiS[$nameSpace][$apiControllerClassName]['desc']  = $desc;
             $allApiS[$nameSpace][$apiControllerClassName]['methods'] = [];
@@ -132,6 +134,10 @@ class ApiList {
                         continue;
                     }
                 }
+                $mValue = humpToLine($mValue);
+                $mValue = str_replace('action-', '', $mValue);
+
+
                 $title      = '//请检测函数注释';
                 $desc       = '//请使用@desc 注释';
                 $isMethodIgnore = false;
@@ -141,13 +147,11 @@ class ApiList {
                     $docCommentArr = explode("\n", $docComment);
                     $comment       = trim($docCommentArr[1]);
                     $title         = trim(substr($comment, strpos($comment, '*') + 1));
-
                     foreach ($docCommentArr as $comment) {
                         $pos = stripos($comment, '@desc');
                         if ($pos !== false) {
                             $desc = substr($comment, $pos + 5);
                         }
-
                         if (stripos($comment, '@ignore') !== false) {
                             $isMethodIgnore = true;
                         }
@@ -157,7 +161,7 @@ class ApiList {
                 if ($isMethodIgnore) {
                     continue;
                 }
-
+                $routeName .= '/'.$mValue;
                 $allApiS[$nameSpace][$apiControllerClassName]['methods'][$routeName] = array(
                     'service' => $routeName,
                     'title'   => $title,
@@ -192,4 +196,25 @@ function listDir($dir) {
         }
     }
     return $dirInfo;
+}
+
+/*
+ * 下划线转驼峰
+ */
+function convertUnderline($str)
+{
+    $str = preg_replace_callback('/([-_]+([a-z]{1}))/i',function($matches){
+        return strtoupper($matches[2]);
+    },$str);
+    return $str;
+}
+
+/*
+ * 驼峰转下划线
+ */
+function humpToLine($str){
+    $str = preg_replace_callback('/([A-Z]{1})/',function($matches){
+        return '-'.strtolower($matches[0]);
+    },$str);
+    return $str;
 }

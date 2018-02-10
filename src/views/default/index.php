@@ -88,7 +88,7 @@ $table_color_arr = explode(" ", "red orange yellow olive teal blue violet purple
                                         <tr>
                                             <td><?=$num++?></td>
                                             <td>
-                                                <a href="<?= \yii\helpers\Url::to(['/api-document/default/view', 'service' => $mItem['service']]) ?>"><?=$mItem['service']?></a>
+                                                <a target="_blank" href="<?= \yii\helpers\Url::to(['/api-document/default/view', 'service' => $mItem['service']]) ?>"><?=$mItem['service']?></a>
                                             </td>
                                             <td><?=$mItem['title']?></td>
                                             <td><?=$mItem['desc']?></td>
