@@ -6,7 +6,7 @@
  * Time: 下午8:04
  */
 
-namespace admin\structs;
+namespace app\structs;
 
 
 use yangsl\apidoc\apidoc\ApidocInterface;
@@ -45,7 +45,7 @@ abstract class BaseRequest implements ApidocInterface
             return $this->params[$name];
         }
         $rules = $this->getRules();
-        $rule = isset($rules[$name]) ?? null;
+        $rule = $rules[$name] ?? null;
         if($rule === null) {
             throw new Exception('rules中没有设置请求参数' . $name);
         }
@@ -87,7 +87,7 @@ abstract class BaseRequest implements ApidocInterface
     public function __unset($name)
     {
         $rules = $this->getRules();
-        $rule = isset($rules[$name]) ?? null;
+        $rule = $rules[$name] ?? null;
         if($rule && isset($rule['default'])) {
             $this->params[$name] = $rule['default'];
         } else if($rule && isset($rule['type'])) {

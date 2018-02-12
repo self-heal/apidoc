@@ -1,6 +1,8 @@
 # apidoc
 yii2 apidoc
 
+yii2 basic版本 测试通过
+
 Installation
 ------------
 
@@ -11,16 +13,18 @@ The preferred way to install this extension is through [composer](http://getcomp
 composer require yangsl/apidoc
 
 ```
-config add to modules
+配置
 ```
-    'api-document' => [
+if (YII_ENV_DEV) {
+    $config['modules']['api-document'] = [
         'class' => 'yangsl\apidoc\Module',
         'defaultRoute' => 'default', //默认控制器
         'appControllers' => true, //是否检测app\controllers命名空间下的控制器
         'modules' => [  //需要生成文档的模块命名空间
             'app\modules\test\Module',
         ],
-    ],
+    ];
+}
 ```
 
 访问
@@ -28,7 +32,7 @@ config add to modules
 http://domain/api-document
 
 ```
-注释
+action注释
 ```
     /**
      * 这是一个测试的Api
@@ -47,7 +51,7 @@ http://domain/api-document
      * @exception 500 服务器内部错误
      */
 ```
-or
+或
 
 ```
     /**
@@ -59,4 +63,26 @@ or
      * @exception 400 参数传递错误
      * @exception 500 服务器内部错误
      */
+     public function actionTestApi()
+     {
+         $postData = Yii::$app->request->post();
+         $requestData = new DemoRequest($postData);
+         $response = DemoService::testMethod($requestData);
+         return $this->renderMessageResponse($response);
+     }
+
+```
+service层处理逻辑
+
+    public static function testMethod(DemoRequest $requestData) : MessageResponse
+    {
+        $response = new MessageResponse();
+
+        $id = $requestData->id; //代码提示
+
+        //todo
+        $response->message = '错误提示';
+        return $response;
+    }
+
 ```
