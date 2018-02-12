@@ -17,11 +17,11 @@ abstract class BaseRequest implements ApidocInterface
 {
     public $params = [];
 
-    public function __construct($params = [])
+    public function __construct(?array $params)
     {
-        $this->params = $params;
+        $this->params = $params ?? [];
 
-        if(YII_ENV_DEV) {
+        if(YII_ENV_DEV && $params !== null) {
             $rules = $this->getRules();
             foreach ($rules as $key => $rule) {
                 if(!isset($rule['require']) || !$rule['require']) {
