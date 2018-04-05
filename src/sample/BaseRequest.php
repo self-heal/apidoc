@@ -17,7 +17,7 @@ abstract class BaseRequest implements ApidocInterface
 {
     public $params = [];
 
-    public function __construct(?array $params)
+    public function __construct(?array $params = [])
     {
         $this->params = $params ?? [];
 

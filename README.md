@@ -1,6 +1,11 @@
 # apidoc
 yii2 apidoc
 
+根据注释或者定义的对象文件生成接口文档。
+
+yii2 basic版本 测试通过
+yii2 advance版本 测试通过
+
 Installation
 ------------
 
