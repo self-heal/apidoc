@@ -1,14 +1,6 @@
 # apidoc
 yii2 apidoc
 
-根据注释或者定义的对象文件生成接口文档，参数不多用注释，参数太多传递对象，解决参数太多controller向service层传值繁琐问题（传数组不支持ide代码提示，具体需要哪些参数不直观），
-
-添加必填字段校验，基本数据类型校验，减少action数据校验成本，约束项目代码与接口高度统一，避免接口需额外维护，更新不及时等问题。
-
-@apidoc形式传值，对象需继承BaseRequest类，实现ApidocInterface接口。
-
-yii2 basic版本 测试通过
-
 Installation
 ------------
 
@@ -19,18 +11,17 @@ The preferred way to install this extension is through [composer](http://getcomp
 composer require yangsl/apidoc
 
 ```
-配置
+config add to modules
 ```
-if (YII_ENV_DEV) {
-    $config['modules']['api-document'] = [
+    'api-document' => [
         'class' => 'yangsl\apidoc\Module',
         'defaultRoute' => 'default', //默认控制器
+        'appFolder' => 'admin',
         'appControllers' => true, //是否检测app\controllers命名空间下的控制器
         'modules' => [  //需要生成文档的模块命名空间
             'app\modules\test\Module',
         ],
-    ];
-}
+    ],
 ```
 
 访问
@@ -38,7 +29,7 @@ if (YII_ENV_DEV) {
 http://domain/api-document
 
 ```
-action注释
+注释
 ```
     /**
      * 这是一个测试的Api
@@ -57,7 +48,7 @@ action注释
      * @exception 500 服务器内部错误
      */
 ```
-或
+or
 
 ```
     /**
@@ -69,27 +60,4 @@ action注释
      * @exception 400 参数传递错误
      * @exception 500 服务器内部错误
      */
-     public function actionTestApi()
-     {
-         $postData = Yii::$app->request->post();
-         $requestData = new DemoRequest($postData);
-         $response = DemoService::testMethod($requestData);
-         return $this->renderMessageResponse($response);
-     }
-
-```
-service层处理逻辑, 适用@apidoc形式传值
-
-```
-    public static function testMethod(DemoRequest $requestData) : MessageResponse
-    {
-        $response = new MessageResponse();
-
-        $id = $requestData->id; //代码提示
-
-        //todo
-        $response->message = '错误提示';
-        return $response;
-    }
-
 ```

@@ -5,8 +5,10 @@ namespace yangsl\apidoc;
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'yangsl\apidoc\controllers';
+    public $appFolder = 'app';
     public $appControllers = true;
     public $modules = [];
+
 
     public function init()
     {

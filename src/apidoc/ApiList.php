@@ -9,6 +9,7 @@ class ApiList {
      * @var bool 是否检测基础控制器
      */
     public $appControllers = true;
+    public $appFolder = 'app';
 
     /**
      * 需要生成文档的模块名
@@ -31,6 +32,7 @@ class ApiList {
                 $classNameTemp = strstr($file, '/controllers');
                 $classNameTemp = rtrim(substr($classNameTemp, 13), '.php');
                 $className = \Yii::$app->controllerNamespace . '\\'. $classNameTemp;
+                $className = str_replace('/', '\\', $className);
                 return $className;
             }, $files);
         }
@@ -56,11 +58,14 @@ class ApiList {
 
         $apiControllers = array_merge($appControllers, $modulesControllers);
         foreach ($apiControllers as $k=>$className) {
+            if(substr($className, -14) == 'BaseController') {
+                unset($apiControllers[$k]);
+                continue;
+            }
             if (substr($className, -10) != 'Controller') {
                 unset($apiControllers[$k]);
             }
         }
-
 
         foreach ($apiControllers as $ctlClassName) {
             $route = str_replace('\\', '/', $ctlClassName);
@@ -70,15 +75,15 @@ class ApiList {
             $apiControllerClassName = $explodeName[count($explodeName) - 1];
             unset($explodeName[count($explodeName) - 1]);
             $nameSpace = join('/', $explodeName);
-            $routeName = ltrim($nameSpace, 'app') .'/'. strtolower(substr($apiControllerClassName, 0, -10));
+            $routeName = ltrim($nameSpace, $this->appFolder) .'/'. strtolower(substr($apiControllerClassName, 0, -10));
 
             if (!class_exists($ctlClassName)) {
                 continue;
             }
             //  左菜单的标题
             $ref        = new \ReflectionClass($ctlClassName);
-            $title      = "//请检测接口服务注释($apiControllerClassName)";
-            $desc       = '//请使用@desc 注释';
+            $title      = "[$apiControllerClassName]";
+            $desc       = '[请使用@desc 注释]';
 
             $isClassIgnore = false; // 是否屏蔽此接口类
             $docComment = $ref->getDocComment();

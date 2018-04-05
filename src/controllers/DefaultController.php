@@ -31,8 +31,12 @@ class DefaultController extends Controller
         $this->layout = 'main';
         $api = new ApiList();
         $api->appControllers = $this->module->appControllers;
-        $api->modules = $this->module->modules;
-        $allApiS = $api->getApiList($api->modules);
+        $api->appFolder = $this->module->appFolder;
+        $allApiS = Yii::$app->cache->get('allApiS');
+        if(empty($allApiS)) {
+            $allApiS = $api->getApiList($this->module->modules);
+            Yii::$app->cache->set('allApiS', $allApiS, 1800);
+        }
         return $this->render('index',[
             'allApiS' => $allApiS,
             'theme' => $theme
