@@ -33,6 +33,7 @@ $typeMaps = array(
     'fixed' => '固定值',
     'enum' => '枚举类型',
     'object' => '对象',
+    'null' => ''
 );?>
 <?php
 foreach ($rules as $key => $rule) {
@@ -85,20 +86,28 @@ foreach ($rules as $key => $rule) {
     </thead>
     <tbody>
     <?php
-        function renderResponse($response, $typeMaps = [], $child = false) {
+        function renderResponse($response, $typeMaps = [], $level = 0) {
+            $space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            $indent = $space;
+            for ($i = 0; $i < $level; $i++) {
+                $indent .= $space;
+            }
             foreach ($response as $k => $item) {
-                $type = isset($typeMaps[$item['type']]) ? $typeMaps[$item['type']] : $item['type'];
-                if($child) {
+                $innerType = isset($item['type']) ? $item['type'] : 'null';
+                $innerDesc = isset($item['desc']) ? $item['desc'] : '';
+                $type = isset($typeMaps[$innerType]) ? $typeMaps[$innerType] : $item['type'];
+                if($level > 0) {
                     echo <<<EOT
-<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$k</td><td>$type</td><td>{$item['desc']}</td></tr>
+<tr><td>$indent$k</td><td>$type</td><td>{$innerDesc}</td></tr>
 EOT;
                 } else {
                     echo <<<EOT
-<tr><td>$k</td><td>$type</td><td>{$item['desc']}</td></tr>
+<tr><td>$k</td><td>$type</td><td>{$innerDesc}</td></tr>
 EOT;
                 }
-                if($item['type'] == 'array' && isset($item['items'])) {
-                    renderResponse($item['items'], $typeMaps,true);
+                if($innerType == 'null' && is_array($item)) {
+                    $level++;
+                    renderResponse($item, $typeMaps,$level);
                 }
             }
         }
