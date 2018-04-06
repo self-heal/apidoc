@@ -118,6 +118,9 @@ class ApiList {
                 if (!$rMethod->isPublic() || strpos($mValue, '__') === 0) {
                     continue;
                 }
+                if(strpos($mValue, 'action') === false) {
+                    continue;
+                }
                 $mValue = $this->humpToLine($mValue);
                 $mValue = str_replace('action-', '', $mValue);
 
