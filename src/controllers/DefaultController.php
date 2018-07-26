@@ -32,10 +32,12 @@ class DefaultController extends Controller
         $api = new ApiList();
         $api->appControllers = $this->module->appControllers;
         $api->appFolder = $this->module->appFolder;
+        $api->cacheDuration = $this->module->cacheDuration;
+        $cacheDuration = $api->cacheDuration;
         $allApiS = Yii::$app->cache->get('allApiS');
         if(empty($allApiS)) {
             $allApiS = $api->getApiList($this->module->modules);
-            Yii::$app->cache->set('allApiS', $allApiS, 1800);
+            Yii::$app->cache->set('allApiS', $allApiS, $cacheDuration);
         }
         return $this->render('index',[
             'allApiS' => $allApiS,

@@ -23,7 +23,6 @@ class ApiDesc {
         $ctlClassName = \Yii::$app->controllerNamespace . '\\%sController';
         $ctlClassName = sprintf($ctlClassName, ucfirst($exploade_service[0]));
         $methodName = 'action' .ucfirst($exploade_service[1]);
-
         //modules
         if (!class_exists($ctlClassName)) {
             $c = count($exploade_service);
@@ -57,8 +56,17 @@ class ApiDesc {
             }
         }
         $methodName = $this->convertHyphens($methodName);
-        // 方法注释
-        $rMethod = new \ReflectionMethod($ctlClassName, $methodName);
+
+        if($rClass->hasMethod($methodName)) {
+            // 方法注释
+            $rMethod = new \ReflectionMethod($ctlClassName, $methodName);
+        } else {
+            $methodName = $exploade_service[1];
+            $ctlObj = new $ctlClassName('', '');
+            $actions = $ctlObj->actions();
+            $actionCls = $actions[$methodName]['class'];
+            $rMethod = new \ReflectionClass($actionCls);
+        }
         $docCommentArr = explode("\n", $needClassDocComment . "\n" . $rMethod->getDocComment());
 
         $setApidocObject = false;

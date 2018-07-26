@@ -10,6 +10,7 @@ class ApiList {
      */
     public $appControllers = true;
     public $appFolder = 'app';
+    public $cacheDuration = 1800;
 
     /**
      * 需要生成文档的模块名
@@ -24,7 +25,7 @@ class ApiList {
             $theme = 'fold';
         }
         $appControllers = [];
-        $apiDirName = $this->appControllers?'../controllers':'';
+        $apiDirName = $this->appControllers ? '../controllers':'';
         // 处理最外层的控制器 \app\controllers
         if ($this->appControllers) {
             $files = $this->listDir(API_ROOT . D_S . $apiDirName);
@@ -149,6 +150,44 @@ class ApiList {
                     continue;
                 }
                 $routeUrl = $routeName . '/'.$mValue;
+                $allApiS[$nameSpace][$apiControllerClassName]['methods'][$routeUrl] = array(
+                    'service' => $routeUrl,
+                    'title'   => $title,
+                    'desc'    => $desc,
+                );
+            }
+
+            $ctlObj = new $ctlClassName('','');
+            $method = $ctlObj->actions();
+            foreach ($method as $action => $mValue) {
+                if($action == 'error') {
+                    continue;
+                }
+                $routeUrl = $routeName . '/'.$action;
+                $actionCls = $mValue['class'];
+
+                $ref        = new \ReflectionClass($actionCls);
+                $title      = "";
+                $desc       = '[请使用@desc 注释]';
+                $docComment = $ref->getDocComment();
+                if ($docComment !== false) {
+                    $docCommentArr = explode("\n", $docComment);
+                    $comment       = trim($docCommentArr[1]);
+                    $title         = trim(substr($comment, strpos($comment, '*') + 1));
+                    foreach ($docCommentArr as $comment) {
+                        $pos = stripos($comment, '@desc');
+                        if ($pos !== false) {
+                            $desc = substr($comment, $pos + 5);
+                        }
+                        if (stripos($comment, '@ignore') !== false) {
+                            $isMethodIgnore = true;
+                        }
+                    }
+                }
+                if ($isMethodIgnore) {
+                    continue;
+                }
+
                 $allApiS[$nameSpace][$apiControllerClassName]['methods'][$routeUrl] = array(
                     'service' => $routeUrl,
                     'title'   => $title,
