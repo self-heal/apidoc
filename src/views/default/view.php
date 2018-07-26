@@ -171,8 +171,10 @@ if (!empty($exceptions)) {?>
             <option value="GET">GET</option>
     </select>
     <div class="ui input">
-        <input name="request_url" value="<?=$url?>"  style="width: 350px;margin-right: 10px;"/>
-        <input name="token" value=""  placeholder="access token" style="width: 350px;"/>
+        <input name="request_url" value="<?=$url?>"  style="width: 350px;"/>
+        <?php if($service != '/site/login') {?>
+        <input name="token" value=""  placeholder="access token" style="width: 350px;margin-left: 10px;"/>
+        <?php }?>
         <input type="submit" name="submit" value="发送" id="submit" style="font-size:14px;line-height: 20px;margin-left: 10px "/>
     </div>
 </div>
