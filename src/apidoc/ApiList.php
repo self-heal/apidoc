@@ -160,7 +160,6 @@ class ApiList {
             //字典排列
             ksort($allApiS);
         }
-
         foreach ($allApiS as $namespace => $subAllApiS) {
             ksort($subAllApiS);
             if (empty($subAllApiS)) {
