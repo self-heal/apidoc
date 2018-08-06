@@ -10,6 +10,7 @@ namespace yangsl\apidoc\controllers;
 use yangsl\apidoc\apidoc\ApiDesc;
 use yangsl\apidoc\apidoc\ApiList;
 use Yii;
+use yii\filters\auth\HttpBasicAuth;
 use yii\web\Controller;
 
 /**
@@ -18,12 +19,24 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller
 {
+
     public $layout = 'main';
     /**
      * @var \yii\gii\Module
      */
     public $module;
 
+    public function beforeAction($action){
+        $password = $this->module->password;
+        if($action->id != 'login' && !empty($password)) {
+            $checkLogin = Yii::$app->session->get('checklogin');
+            if(!$checkLogin) {
+                return $this->redirect('/api-document/default/login');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
 
     public function actionIndex()
     {
@@ -47,7 +60,6 @@ class DefaultController extends Controller
 
     public function actionView()
     {
-
         $service = \Yii::$app->request->get('service');
         $api = new ApiDesc();
         $api->appControllers = $this->module->appControllers;
@@ -60,6 +72,23 @@ class DefaultController extends Controller
             'returns' => $responseData,
             'service' => $service
         ]);
+    }
+
+    public function actionLogin()
+    {
+        Yii::$app->session->set('checklogin', null);
+        if(Yii::$app->request->isPost) {
+            $password = Yii::$app->request->post('password', '');
+            if($this->module->password == $password) {
+                Yii::$app->session->set('checklogin', 1);
+                return $this->redirect('/api-document/default/index');
+            }
+            return $this->refresh();
+        } else {
+            return $this->render('login', [
+
+            ]);
+        }
     }
 
 }

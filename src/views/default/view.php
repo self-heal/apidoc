@@ -182,6 +182,7 @@ if (!empty($exceptions)) {?>
 </div>
     <?php
         $_csrf = \Yii::$app->request->getCsrfToken();
+        $csrfKey = Yii::$app->request->csrfParam;
     ?>
     </div>
 </div>
@@ -211,7 +212,7 @@ $this->beginBlock('js') ?>
             }
         });
         if ($("select").val() == 'POST') {
-            data['_csrf'] = "<?=$_csrf?>";
+            data['<?=$csrfKey?>'] = "<?=$_csrf?>";
         }
         return data;
     }

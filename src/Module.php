@@ -8,6 +8,7 @@ class Module extends \yii\base\Module
     public $appFolder = 'app';
     public $appControllers = true;
     public $cacheDuration = 1800;
+    public $password = '';
     public $modules = [];
 
 
